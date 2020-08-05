@@ -1,17 +1,47 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <div v-if="option ==='signUp'">
+    <SignUp :method="parentMethode"></SignUp>
+    </div>
+    <div v-else-if="option ==='login'">
+    <Login :method="parentMethode"></Login>
+    </div>
+    <div style="text-align: -webkit-center;" v-else-if="option ==='logged'">
+    <Profile :method="parentMethode" :token="token"></Profile>
+    </div>
+    <div v-else-if="option ==='editprofile'">
+    <EditProfile :method="parentMethode" :token="token"></EditProfile>
+    </div>
+    <notifications group="foo" />
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import SignUp from './components/SignUp.vue'
+import Login from './components/Login.vue'
+import Profile from './components/Profile.vue'
+import EditProfile from './components/EditProfile.vue'
 
 export default {
   name: 'App',
+  data(){
+    return{
+      option: 'login',
+      token: "",
+    }
+  },
   components: {
-    HelloWorld
+    Login,
+    Profile,
+    SignUp,
+    EditProfile
+  },
+    methods: {
+    parentMethode(valuefromChild, token){
+      this.option = valuefromChild
+      this.token = token
+      // console.log(token)
+    }
   }
 }
 </script>
